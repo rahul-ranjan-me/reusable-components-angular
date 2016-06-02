@@ -5,7 +5,8 @@ define([
 		// Controllers
 
 		"controllers/HomeCtrl",
-		"controllers/InnerPageCtrl",
+		"controllers/AlerterCtrl",
+		"controllers/LoggerCtrl",
 
 		// Directives
 
@@ -22,7 +23,8 @@ define([
 		// Templates
 
 		"text!../templates/homeTemplate.html",
-		"text!../templates/innerPage.html"
+		"text!../templates/alerter.html",
+		"text!../templates/logger.html"
 	], 
 	function(
 		angular,
@@ -31,7 +33,8 @@ define([
 		// Controllers
 
 		HomeCtrl,
-		InnerPageCtrl,
+		AlerterCtrl,
+		LoggerCtrl,
 
 		// Directives
 
@@ -48,7 +51,8 @@ define([
 		// Templates
 
 		homeTemplate,
-		innerPage
+		alerter,
+		logger
 	) {
 
 	    var app = angular.module("projectModule", ["ngRoute"] )
@@ -56,7 +60,8 @@ define([
 	    	// Controllers
 
 	    	.controller('HomeCtrl', HomeCtrl)
-			.controller('InnerPageCtrl', InnerPageCtrl)
+			.controller('AlerterCtrl', AlerterCtrl)
+			.controller('LoggerCtrl', LoggerCtrl)
 
 			// Directives
 
@@ -76,9 +81,13 @@ define([
 							template: homeTemplate,
 							controller: 'HomeCtrl'
 						}).
-						when('/innerPage', {
-							template: innerPage,
-							controller: 'InnerPageCtrl'
+						when('/alerter', {
+							template: alerter,
+							controller: 'AlerterCtrl'
+						}).
+						when('/logger', {
+							template: logger,
+							controller: 'LoggerCtrl'
 						}).
 						otherwise({
 							redirectTo: '/'

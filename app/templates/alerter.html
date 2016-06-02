@@ -1,0 +1,64 @@
+<div>
+	<header-directive headertext="UI Reusable Components"></header-directive>
+	<div class="content">
+		<p><a href="#/">Go to home</a></p>
+
+		<h3>Alerter Plungin</h3>
+		<p>Alerter is a plungin which is written in native javascript and framework agnostic. We can use alerter to show and kind of alert or notification. It accepts custom HTML as well.</p>
+		
+		<p><img src="/app/images/alerter.png" alt="Alerter image" /></p>
+
+		<button ng-click="alertClick()">Alert</button>
+		<button ng-click="warnClick()">Warn</button>
+		<button ng-click="errorClick()">Error</button>
+		<button ng-click="notificationClick()">Notification</button>
+
+		<h4>Alert</h4>
+		<pre>
+
+	var abc = alerter.alert('My Application', 'This is para 1', 'This is para 2', ['OK', 'Cancel']);
+	abc.on('ok', function(){
+		alert('I am alert ok');
+	});
+
+	abc.on('cancel', function(){
+		alert('I am alert cancel');
+	});
+		</pre>
+
+		<h4>Warn</h4>
+		<pre>
+
+	var xyz = alerter.warn('My Application', '<strong>This is new</strong>', 'This is old', ['OK', 'Cancel', 'Reload Me']);
+
+	xyz.on('ok', function(){
+		alert('I am warn ok');
+	});
+
+	xyz.on('cancel', function(){
+		alert('I am warn cancel');
+	});
+
+	xyz.on('reloadMe', function(){
+		alert('I am reload');
+	}); 	
+		</pre>
+
+		<h4>Error</h4>
+		<pre>
+
+	var xyz = alerter.error('My Application', 'Some errors requires your attention', ['OK']);
+
+	xyz.on('ok', function(){
+		alert('I am error ok');
+	});
+		</pre>
+
+		<h4>Notification</h4>
+		<pre>
+
+	var xyz = alerter.notification('My Application', 'I will go off in <strong>3</strong> seconds', [3]);
+		</pre>
+
+	</div>
+</div>

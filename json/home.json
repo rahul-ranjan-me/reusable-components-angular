@@ -1,4 +1,15 @@
 {
-	"projectName" : "Angular Boilerplate",
-	"pageName": "Homepage"
+	"projectName" : "reusable components library",
+	"components" : [
+		{
+			"name" : "Logger",
+			"url" : "#/logger",
+			"description" : "Logger is a small utility library. It makes API call to log messages over splunk."
+		},
+		{
+			"name" : "Alerter",
+			"url" : "#/alerter",
+			"description" : "Alerter is a plungin which is written in native javascript and framework agnostic. We can use alerter to show and kind of alert or notification. It accepts custom HTML as well."
+		}
+	]
 }

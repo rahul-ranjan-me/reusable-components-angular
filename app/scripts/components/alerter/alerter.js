@@ -1,5 +1,5 @@
 define([], 
-	function() 
+	function()
 	{
 
 		var eventTree = {},
