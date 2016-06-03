@@ -37,6 +37,7 @@
     "angular": "^1.5.5",
     "angular-route": "^1.5.5",
     "jquery": "^2.2.4",
+    "lodash": "^4.13.1",
     "text": "github:requirejs/text"
   }
 }

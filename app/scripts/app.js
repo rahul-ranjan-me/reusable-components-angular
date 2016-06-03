@@ -7,10 +7,12 @@ define([
 		"controllers/HomeCtrl",
 		"controllers/AlerterCtrl",
 		"controllers/LoggerCtrl",
+		"controllers/GridCtrl",
 
 		// Directives
 
 		"directives/header",
+		"components/grid/grid",
 
 		// Services
 
@@ -24,7 +26,8 @@ define([
 
 		"text!../templates/homeTemplate.html",
 		"text!../templates/alerter.html",
-		"text!../templates/logger.html"
+		"text!../templates/logger.html",
+		"text!../templates/gridExample.html"
 	], 
 	function(
 		angular,
@@ -35,10 +38,12 @@ define([
 		HomeCtrl,
 		AlerterCtrl,
 		LoggerCtrl,
+		GridCtrl,
 
 		// Directives
 
 		header,
+		grid,
 
 		// Services
 
@@ -52,7 +57,8 @@ define([
 
 		homeTemplate,
 		alerter,
-		logger
+		logger,
+		gridExample
 	) {
 
 	    var app = angular.module("projectModule", ["ngRoute"] )
@@ -62,10 +68,12 @@ define([
 	    	.controller('HomeCtrl', HomeCtrl)
 			.controller('AlerterCtrl', AlerterCtrl)
 			.controller('LoggerCtrl', LoggerCtrl)
+			.controller('GridCtrl', GridCtrl)
 
 			// Directives
 
 	    	.directive('headerDirective', header)
+	    	.directive('gridDirective', grid)
 		
 			// Services
 
@@ -88,6 +96,10 @@ define([
 						when('/logger', {
 							template: logger,
 							controller: 'LoggerCtrl'
+						}).
+						when('/grid', {
+							template: gridExample,
+							controller: 'GridCtrl'
 						}).
 						otherwise({
 							redirectTo: '/'

@@ -2,6 +2,7 @@ require.config({
 	paths: {
 		'angular' : '../../node_modules/angular/angular',
 		'jquery' : '../../node_modules/jquery/dist/jquery',
+		'lodash' : '../../node_modules/lodash/lodash',
 		'text' : '../../node_modules/text/text',
 		'css' : '../../node_modules/require-css/css',
 		'css-builder' : '../../node_modules/require-css/css-builder',
@@ -18,6 +19,9 @@ require.config({
 		},
 		jquery: {
 			exports : '$'
+		},
+		lodash: {
+			exports : '_'
 		}
 	},
 	baseUrl: '/scripts'

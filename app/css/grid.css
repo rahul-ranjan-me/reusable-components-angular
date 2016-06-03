@@ -1,0 +1,57 @@
+.labGrid ul,
+.labGrid li{
+	list-style-type:none;
+	display: block;
+	width: 100%;
+}
+
+.labGrid ul{
+	display: table;
+	margin: 0;
+	padding: 0
+}
+
+.labGrid li{
+	display: table-row;
+}
+
+.labGrid li span.cell{
+	display: table-cell;
+	border-bottom:1px solid #ccc;
+	padding: 5px 10px;
+}
+
+.labGrid li.header{
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.labGrid li span.sortable{
+	cursor: pointer
+}
+
+.labGrid li.body{
+	transition: background-color 0.7s ease;
+	cursor:default;
+}
+
+.labGrid li.body:hover{
+	background-color:rgba(0, 154, 189, 0.2);
+}
+
+.labGrid .action-header{
+	background: #f6f6f6;
+    width: 100%;
+    clear: both;
+    display: block;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.labGrid .action-header .search-box{
+	padding: 6px 6px;
+    border: 1px solid #ddd;
+    float: right;
+    font-size: 12px;
+    width: 23%;
+}

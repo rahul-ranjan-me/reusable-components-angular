@@ -1,0 +1,19 @@
+<div class="labGrid">
+	<div class="action-header">
+		<input type="text" ng-change="search()" placeholder="Filter..." class="search-box" ng-model="searchKey" />
+	</div>
+	<ul>
+		<li class="header">
+			<span class="cell" ng-repeat="(i, header) in grid.headerData" ng-click="sortMe(header)" ng-class="{true:'sortable'}[header.sort]" style="width: {{header.width}}">
+				{{header.label}} <span ng-if="header.direction.length > 0"><i ng-class="{asc:'glyphicon glyphicon-arrow-up', desc:'glyphicon glyphicon-arrow-down'}[header.direction]" /></span>
+			</span>
+		</li>
+		<li class="body" ng-repeat="row in grid.grid | filter:searchKey:strict" ng-click="rowselect({row: row})">
+			<span class="cell" ng-repeat="(i, item) in row">{{item}}</span>
+		</li>
+	</ul>
+</div>
+
+
+
+
