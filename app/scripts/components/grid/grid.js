@@ -8,18 +8,18 @@ define(
 		grid
 	){
     
-	    return function(){
+	    return function($filter){
 	    	return {
 		    	template : grid,
 		    	scope : {
 		    		grid : '=',
 		    		rowselect : '&'
 		    	},
-		    	replace : true,
 		    	link : function($scope, elem, attrs){
 		    		
 		    		var headers = $scope.grid.headerData,
 		    			gridItems = $scope.grid.grid,
+		    			freezedItems = angular.copy(gridItems),
 		    			pagesize = parseInt(attrs.pagesize),
 		    			allPages = [];
 		    			$scope.curPage = 0;
@@ -58,7 +58,14 @@ define(
 
 		    		}
 
+		    		$scope.search = function(){
+		    			gridItems = $filter('filter')(freezedItems, $scope.searchKey);
+		    			createPage();
+		    		}
 
+		    		/* ****************
+		    			Pagination navigation 
+										**************** */
 		    		$scope.updatePage = function(i, ev){
 		    			ev.preventDefault();
 		    			$scope.curPage = i;
@@ -95,8 +102,10 @@ define(
 			    		createPage();
 					}
 
-
-					function createPage(){
+					/* ****************
+		    			Client side paging of items
+										**************** */
+					function createPage(arg){
 						var pages = [],
 							page = [],
 							item = 0;

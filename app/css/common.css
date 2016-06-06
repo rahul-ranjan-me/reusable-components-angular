@@ -18,3 +18,8 @@ header a:hover{
 	border:1px solid #eee;
 	padding: 20px;
 }
+
+.myExampleGrid .labGrid .grid-container{
+	height: 400px;
+	overflow: auto;
+}

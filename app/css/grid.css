@@ -58,3 +58,19 @@
 .labGrid .pagination-container nav{
 	float: right;
 }
+
+.labGrid  .header-container{
+	padding-right: 12px;
+}
+
+.labGrid ::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+.labGrid ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+}
+ 
+.labGrid ::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}

@@ -59,7 +59,7 @@ define([],
 	    		]
 	    	};
 
-	    	for(var i=0; i<100; i++){
+	    	for(var i=0; i<1000; i++){
 	    		this.$scope.gridData.grid.push(
 	    			{
 	    				name : Math.random().toString().split('.')[1],
