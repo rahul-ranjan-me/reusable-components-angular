@@ -2,8 +2,20 @@
 	<header-directive headertext="UI Reusable Components"></header-directive>
 	<div class="content">
 		<h4>Grid example</h4>
-		<grid-directive class="myExampleGrid" grid="gridData" rowselect="onRowSelect(row)" pagesize="100"></grid-directive>
 
-		<h5><strong>Selected Row :</h5> <pre>{{selectedRow}}</pre></p>
+		<h5>Selected Row :</h5> <pre>{{selectedRow}}</pre>
+
+		<grid-directive 
+			class="myExampleGrid"
+			grid="gridData"
+			rowselect="onRowSelect(row)"
+			pagesize="100"
+			pagepos="both"
+			view="grid"
+			switchview=true>
+			
+		</grid-directive>
+
+		<h5>Selected Row :</h5> <pre>{{selectedRow}}</pre>
 	</div>
 </div>

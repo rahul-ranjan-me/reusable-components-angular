@@ -20,16 +20,28 @@ define(
 		    		var headers = $scope.grid.headerData,
 		    			gridItems = $scope.grid.grid,
 		    			freezedItems = angular.copy(gridItems),
-		    			pagesize = parseInt(attrs.pagesize),
 		    			allPages = [];
+		    			pagesize = parseInt(attrs.pagesize),
 		    			$scope.curPage = 0;
-		    		
+		    			$scope.pagePos = attrs.pagepos;
+		    			$scope.view = attrs.view;
+		    			$scope.switchView = attrs.switchview;
+		    			$scope.userPaging = pagesize;
 
 		    		/* ****************
 		    			This for loop will be called during the first rendering 
 		    			of this directive to sort on load
 																**************** */
 		    		doSortonLoad();
+
+		    		$scope.changeView = function(view){
+		    			$scope.view = view;
+		    		}
+
+		    		$scope.itemsPerPage = function(args){
+		    			pagesize = parseInt(args);
+		    			doSortonLoad();
+		    		}
 
 		    		/* ****************
 		    			Sorting on cloumn click
@@ -63,6 +75,7 @@ define(
 		    			createPage();
 		    		}
 
+		    		
 		    		/* ****************
 		    			Pagination navigation 
 										**************** */

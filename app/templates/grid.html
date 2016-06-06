@@ -1,5 +1,10 @@
 <div class="labGrid clearfix">
-	<div class="pagination-container">
+	
+	<!-- =================================
+		Top Pagination starts here
+	=================================== -->
+
+	<div class="pagination-container" ng-if="pagePos=='top' || pagePos=='both'">
 		<nav>
 			<ul class="pagination">
 				<li ng-class="{'disabled': curPage == 0}">
@@ -19,32 +24,83 @@
 		</nav>
 	</div>
 
+	<!-- =================================
+		Top Pagination ends here
+	=================================== -->
+
+	<!-- =================================
+		Action container starts here
+	=================================== -->
 
 	<div class="action-header">
+		<div class="btn-group grid-switcher" role="group" ng-if="switchView">
+			<button type="button" class="btn btn-default" ng-class="{'selected' : view=='grid'}" ng-click="changeView('grid')">Grid</button>
+			<button type="button" class="btn btn-default" ng-class="{'selected' : view=='list'}" ng-click="changeView('list')">List</button>
+		</div>
+
 		<input type="text" ng-change="search()" placeholder="Filter..." class="search-box" ng-model="searchKey" />
 	</div>
 
-	<div class="header-container">
-		<ul class="grid">
-			<li class="header row">
-				<span class="cell" ng-repeat="(i, header) in grid.headerData" ng-click="sortMe(header)" ng-class="{true:'sortable'}[header.sort]" style="width: {{header.width}}">
-					{{header.label}} <span ng-if="header.direction.length > 0"><i ng-class="{asc:'glyphicon glyphicon-arrow-up', desc:'glyphicon glyphicon-arrow-down'}[header.direction]"></i></span>
-				</span>
-			</li>
-		</ul>
+	<!-- =================================
+		Action container ends here
+	=================================== -->
+
+	<!-- =================================
+		Grid view ends here
+	=================================== -->
+
+	<div class="grid-view" ng-if="view=='grid' || view==null">
+		<div class="header-container">
+			<ul class="grid">
+				<li class="header row">
+					<span class="cell" ng-repeat="(i, header) in grid.headerData" ng-click="sortMe(header)" ng-class="{true:'sortable'}[header.sort]" style="width: {{header.width}}">
+						{{header.label}} <span ng-if="header.direction.length > 0"><i ng-class="{asc:'glyphicon glyphicon-arrow-up', desc:'glyphicon glyphicon-arrow-down'}[header.direction]"></i></span>
+					</span>
+				</li>
+			</ul>
+		</div>
+
+		<div class="grid-container">
+			<ul class="grid">
+				<li class="row body" 
+					ng-repeat="row in pageToShow" 
+					ng-click="rowselect({row: row})">
+					<span class="cell" ng-repeat="(i, item) in row" style="width: {{grid.headerData[i].width}}">{{item}}</span>
+				</li>
+			</ul>
+		</div>
 	</div>
 
-	<div class="grid-container">
-		<ul class="grid">
-			<li class="row body" 
-				ng-repeat="row in pageToShow" 
+	<!-- =================================
+		Grid view ends here
+	=================================== -->
+
+	<!-- =================================
+		List view starts here
+	=================================== --> 
+
+	<div class="list-view" ng-if="view=='list'">
+		<ul class="list-container">
+			<li class="list" 
+				ng-repeat="row in pageToShow"
 				ng-click="rowselect({row: row})">
-				<span class="cell" ng-repeat="(i, item) in row" style="width: {{grid.headerData[i].width}}">{{item}}</span>
+				<ul class="ticket">
+					<li ng-repeat="(i, item) in row"><strong>{{i.charAt(0).toUpperCase()}}{{i.slice(1, i.length)}} :</strong> {{item}}</li>
+				</ul>
 			</li>
 		</ul>
 	</div>
 
-	<div class="pagination-container">
+	<!-- =================================
+		List view ends here
+	=================================== -->
+
+	<!-- =================================
+		Bottom Pagination starts here
+	=================================== -->
+
+	<div class="pagination-container" ng-if="pagePos=='bottom' || pagePos=='both'">
+		<label class="items-page">Items per page: <input type="text" ng-value="userPaging" ng-blur="itemsPerPage(userPaging)" ng-model="userPaging" /></label>
 		<nav>
 			<ul class="pagination">
 				<li ng-class="{'disabled': curPage == 0}">
@@ -63,6 +119,10 @@
 			</ul>
 		</nav>
 	</div>
+
+	<!-- =================================
+		Bottom pagination ends here
+	=================================== -->
 
 </div>
 
