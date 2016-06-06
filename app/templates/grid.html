@@ -4,7 +4,7 @@
 		Top Pagination starts here
 	=================================== -->
 
-	<div class="pagination-container" ng-if="pagePos=='top' || pagePos=='both'">
+	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server != 'true'">
 		<nav>
 			<ul class="pagination">
 				<li ng-class="{'disabled': curPage == 0}">
@@ -16,6 +16,27 @@
 				<li ng-repeat="(i, page) in pages" ng-class="{'active': curPage == i}"><a href="#" ng-click="updatePage(i, $event)">{{i+1}}</a></li>
 
 				<li ng-class="{'disabled': curPage == pages.length-1}">
+					<a href="#" aria-label="Next" ng-click="next($event)">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+
+
+	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server == 'true'">
+		<nav>
+			<ul class="pagination">
+				<li ng-class="{'disabled': currentPage == 0}">
+					<a href="#" aria-label="Previous" ng-click="prev($event)">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+
+				<li ng-repeat="(i, page) in pageArray" ng-class="{'active': currentPage == i}"><a href="#" ng-click="callServer(i, $event)">{{i+1}}</a></li>
+
+				<li ng-class="{'disabled': currentPage == pageArray.length}">
 					<a href="#" aria-label="Next" ng-click="next($event)">
 						<span aria-hidden="true">&raquo;</span>
 					</a>
@@ -99,7 +120,7 @@
 		Bottom Pagination starts here
 	=================================== -->
 
-	<div class="pagination-container" ng-if="pagePos=='bottom' || pagePos=='both'">
+	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server != 'true'">
 		<label class="items-page">Items per page: <input type="text" ng-value="userPaging" ng-blur="itemsPerPage(userPaging)" ng-model="userPaging" /></label>
 		<nav>
 			<ul class="pagination">

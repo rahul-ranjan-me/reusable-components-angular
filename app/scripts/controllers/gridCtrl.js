@@ -1,8 +1,15 @@
 define([], 
 	function() {
 		
-	    function GridCtrl($scope, httpCalls){
+	    function GridCtrl($scope, httpCalls, $http){
 	    	this.$scope = $scope;
+	    	this.$http = $http;
+
+
+
+/* *************************************
+	Client side implementation starts here
+************************************* */
 
 	    	this.$scope.gridData = {
 	    		headerData : {
@@ -70,10 +77,85 @@ define([],
 	    		);
 	    	}
 
-	    	this.$scope.onRowSelect = function(row){
-	    		this.$scope.selectedRow = row;
+	    	this.$scope.onClientRowSelect = function(row){
+	    		this.$scope.selectedClientRow = row;
 	    	}.bind(this);
+
+/* *************************************
+	Client side implementation ends here
+************************************* */
+
+
+
+
+
+/* *************************************
+	Server side implementation starts here
+************************************* */
+			
+			this.$scope.serverGridData = {
+				headerData : {
+	    			name: {
+	    				label:'Name',
+	    				id: 'name',
+	    				width:'25%'
+	    			},
+	    			age: {
+	    				label:'Age',
+	    				id: 'age',
+	    				sort: true,
+	    				sorted: 'asc',
+	    				width:'25%'
+	    			},
+	    			birthday: {
+	    				label:'Birthday',
+	    				id: 'birthday',
+	    				sort: true,
+	    				width:'25%'
+	    			},
+	    			salary: {
+	    				label: 'Salary',
+	    				id: 'salary',
+	    				sort: true,
+	    				width:'25%'
+	    			}
+	    		},
+	    		grid : []
+			};
+
+			this.callServer('/json/gridFakeData.js', {});
+
+			this.$scope.onServerRowSelect = function(row){
+	    		this.$scope.selectedServerRow = row;
+	    	}.bind(this);
+
+
+
+
+/* *************************************
+	Server side implementation ends here
+************************************* */
+
+	    	
 	    }
+
+	    GridCtrl.prototype.callServer = function(url, params) {
+	    	var context = this;
+	    	this.$http({
+    			url : '/json/gridFakeData.js',
+    			method: 'GET',
+    			params: params ? params : {}
+    		})
+    		.then(function successCallback(response) {
+    			var data = response.data;
+    			context.$scope.serverGridData.grid = data.gridData;
+    			context.$scope.serverGridData.totalRecords = data.records;
+    			context.$scope.serverGridData.pageSize = data.pageSize;
+    			context.$scope.serverGridData.currentPage = data.currentPage;
+    		}.bind(this), function errorCallback(response) {
+				alert('some error occured');
+			});
+	    };
 
 	    return GridCtrl;
 	}

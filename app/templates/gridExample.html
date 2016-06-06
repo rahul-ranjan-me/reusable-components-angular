@@ -1,14 +1,42 @@
 <div>
 	<header-directive headertext="UI Reusable Components"></header-directive>
 	<div class="content">
-		<h4>Grid example</h4>
+		<h3>Grid</h3>
 
-		<h5>Selected Row :</h5> <pre>{{selectedRow}}</pre>
+		<h4>Grid example : Server side</h4>
+		<h5>Selected Row :</h5> <pre>{{selectedServerRow}}</pre>
+		<grid-directive 
+			class="myExampleGrid"
+			grid="serverGridData"
+			rowselect="onServerRowSelect(row)"
+			pagesize="100"
+			pagepos="both"
+			view="grid"
+			server="true"
+			switchview=true>
+			
+		</grid-directive>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<h4>Grid example : Client side</h4>
+		<h5>Selected Row :</h5> <pre>{{selectedClientRow}}</pre>
 		<grid-directive 
 			class="myExampleGrid"
 			grid="gridData"
-			rowselect="onRowSelect(row)"
+			rowselect="onClientRowSelect(row)"
 			pagesize="100"
 			pagepos="both"
 			view="grid"
@@ -16,6 +44,9 @@
 			
 		</grid-directive>
 
-		<h5>Selected Row :</h5> <pre>{{selectedRow}}</pre>
+
+
+
+		
 	</div>
 </div>

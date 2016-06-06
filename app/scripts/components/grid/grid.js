@@ -8,7 +8,7 @@ define(
 		grid
 	){
     
-	    return function($filter){
+	    return function($filter, $http, $timeout){
 	    	return {
 		    	template : grid,
 		    	scope : {
@@ -27,11 +27,47 @@ define(
 		    			$scope.view = attrs.view;
 		    			$scope.switchView = attrs.switchview;
 		    			$scope.userPaging = pagesize;
+		    			
+		    			$scope.server = attrs.server;
+		    			$scope.pageArray = [];
 
-		    		/* ****************
+
+
+if($scope.server){
+	$scope.$watch('grid', function handleGridChange(newValue, oldValue){
+		$timeout(function() {
+			console.log($scope.grid.headerData);
+			gridItems = newValue.grid;
+			doSortonLoad();
+			createServerPage(newValue.totalRecords, newValue.pageSize);
+			$scope.currentPage = newValue.currentPage;
+		}, 0);
+	});
+}
+
+
+function createServerPage(totalRecords, pagesize){
+	var indices;
+
+	if(totalRecords%pagesize === 0){
+		indices = totalRecords/pagesize;
+	}else{
+		indices = (totalRecords/pagesize)+1;
+	}
+
+	for(var i=0; i<indices; i++){
+		$scope.pageArray.push(i);
+	}
+}
+
+
+
+
+
+		    		/* ****************************************************************
 		    			This for loop will be called during the first rendering 
 		    			of this directive to sort on load
-																**************** */
+					***************************************************************** */
 		    		doSortonLoad();
 
 		    		$scope.changeView = function(view){
@@ -40,12 +76,13 @@ define(
 
 		    		$scope.itemsPerPage = function(args){
 		    			pagesize = parseInt(args);
-		    			doSortonLoad();
+		    			$scope.curPage = 0;
+		    			createPage();
 		    		}
 
-		    		/* ****************
+		    		/* ***********************************************
 		    			Sorting on cloumn click
-										**************** */
+					************************************************ */
 
 		    		$scope.sortMe = function(item){
 		    			if(item.sort){
@@ -76,9 +113,9 @@ define(
 		    		}
 
 		    		
-		    		/* ****************
+		    		/* ***********************************************
 		    			Pagination navigation 
-										**************** */
+					************************************************ */
 		    		$scope.updatePage = function(i, ev){
 		    			ev.preventDefault();
 		    			$scope.curPage = i;
