@@ -7,6 +7,11 @@ header{
     margin-bottom: 20px;
 }
 
+header a,
+header a:hover{
+	color: #fff
+}
+
 .content{
 	width:80%;
 	margin:0 auto;

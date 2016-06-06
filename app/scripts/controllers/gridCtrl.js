@@ -59,6 +59,17 @@ define([],
 	    		]
 	    	};
 
+	    	for(var i=0; i<100; i++){
+	    		this.$scope.gridData.grid.push(
+	    			{
+	    				name : Math.random().toString().split('.')[1],
+	    				age: Math.random().toString().split('.')[1],
+	    				birthday: Math.random().toString().split('.')[1],
+	    				salary: Math.random().toString().split('.')[1]
+	    			}	
+	    		);
+	    	}
+
 	    	this.$scope.onRowSelect = function(row){
 	    		this.$scope.selectedRow = row;
 	    	}.bind(this);

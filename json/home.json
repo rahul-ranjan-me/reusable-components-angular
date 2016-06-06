@@ -14,7 +14,7 @@
 		{
 			"name" : "Grid",
 			"url" : "#/grid",
-			"description" : "Grid system."
+			"description" : "Grid system. Featurs includes: Pagination, Sorting, Filtering"
 		}
 	]
 }

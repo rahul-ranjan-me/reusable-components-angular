@@ -1,21 +1,20 @@
-.labGrid ul,
-.labGrid li{
+.labGrid ul.grid,
+.labGrid ul.grid li{
 	list-style-type:none;
-	display: block;
 	width: 100%;
 }
 
-.labGrid ul{
+.labGrid ul.grid{
 	display: table;
 	margin: 0;
 	padding: 0
 }
 
-.labGrid li{
+.labGrid li.row{
 	display: table-row;
 }
 
-.labGrid li span.cell{
+.labGrid li.row span.cell{
 	display: table-cell;
 	border-bottom:1px solid #ccc;
 	padding: 5px 10px;
@@ -26,11 +25,11 @@
 	font-size: 14px;
 }
 
-.labGrid li span.sortable{
+.labGrid li.row span.sortable{
 	cursor: pointer
 }
 
-.labGrid li.body{
+.labGrid li.row{
 	transition: background-color 0.7s ease;
 	cursor:default;
 }
@@ -54,4 +53,8 @@
     float: right;
     font-size: 12px;
     width: 23%;
+}
+
+.labGrid .pagination-container nav{
+	float: right;
 }

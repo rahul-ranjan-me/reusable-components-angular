@@ -1,17 +1,60 @@
-<div class="labGrid">
+<div class="labGrid clearfix">
+	<div class="pagination-container">
+		<nav>
+			<ul class="pagination">
+				<li ng-class="{'disabled': curPage == 0}">
+					<a href="#" aria-label="Previous" ng-click="prev($event)">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+
+				<li ng-repeat="(i, page) in pages" ng-class="{'active': curPage == i}"><a href="#" ng-click="updatePage(i, $event)">{{i+1}}</a></li>
+
+				<li ng-class="{'disabled': curPage == pages.length-1}">
+					<a href="#" aria-label="Next" ng-click="next($event)">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+
+
 	<div class="action-header">
 		<input type="text" ng-change="search()" placeholder="Filter..." class="search-box" ng-model="searchKey" />
 	</div>
-	<ul>
-		<li class="header">
+	<ul class="grid">
+		<li class="header row">
 			<span class="cell" ng-repeat="(i, header) in grid.headerData" ng-click="sortMe(header)" ng-class="{true:'sortable'}[header.sort]" style="width: {{header.width}}">
 				{{header.label}} <span ng-if="header.direction.length > 0"><i ng-class="{asc:'glyphicon glyphicon-arrow-up', desc:'glyphicon glyphicon-arrow-down'}[header.direction]" /></span>
 			</span>
 		</li>
-		<li class="body" ng-repeat="row in grid.grid | filter:searchKey:strict" ng-click="rowselect({row: row})">
+
+		<li class="row body" ng-repeat="row in pageToShow | filter:searchKey:strict" ng-click="rowselect({row: row})">
 			<span class="cell" ng-repeat="(i, item) in row">{{item}}</span>
 		</li>
 	</ul>
+
+	<div class="pagination-container">
+		<nav>
+			<ul class="pagination">
+				<li ng-class="{'disabled': curPage == 0}">
+					<a href="#" aria-label="Previous" ng-click="prev($event)">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+
+				<li ng-repeat="(i, page) in pages" ng-class="{'active': curPage == i}"><a href="#" ng-click="updatePage(i, $event)">{{i+1}}</a></li>
+
+				<li ng-class="{'disabled': curPage == pages.length-1}">
+					<a href="#" aria-label="Next" ng-click="next($event)">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+
 </div>
 
 
