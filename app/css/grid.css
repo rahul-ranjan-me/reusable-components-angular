@@ -163,3 +163,21 @@
     background: #337ab7;
     color: #fff;
 }
+
+.mobile .search-container{
+	float: none;
+}
+
+.mobile .selectpage-dropdown{
+	background: #ddd;
+    padding: 6px;
+    width: 100%;
+}
+
+.mobile .selectpage-dropdown select{
+	width: 100%;
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid #eee;
+    font-weight: normal;
+}

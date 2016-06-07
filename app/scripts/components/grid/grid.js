@@ -35,6 +35,20 @@ define(
 		    			$scope.server = attrs.server;
 		    			$scope.pageArray = [];
 
+		    		/* ****************************************************************
+		    			Condition to handle mobile view
+					***************************************************************** */
+
+					if(window.outerWidth < 800){
+						$scope.columnCount = 1;
+						$scope.mobile = true;
+						$scope.view = "list";
+					}else{
+						$scope.mobile = false;
+					}
+
+					/* Condition to handle mobile view ends here */
+
 
 		    		/* ****************************************************************
 		    			This for loop will be called during the first rendering 
@@ -83,6 +97,11 @@ define(
 
 		    		}
 
+		    		/* ***********************************************
+		    			Search through data
+		    			- Generates a query for server side
+		    			- Filter data for client side
+					************************************************ */
 		    		$scope.search = function(search){
 		    			if($scope.server){
 		    				$scope.makeParams(search, null, 'search');
@@ -97,7 +116,7 @@ define(
 		    			Pagination navigation 
 					************************************************ */
 		    		$scope.updatePage = function(i, ev){
-		    			ev.preventDefault();
+		    			if(ev) ev.preventDefault();
 		    			$scope.curPage = i;
 		    			$scope.pageToShow = allPages[$scope.curPage];
 		    		}

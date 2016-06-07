@@ -1,12 +1,14 @@
-<div class="labGrid clearfix">
+<div class="labGrid clearfix" ng-class="{'mobile' : mobile==true}">
 	
 	<!-- =================================
 		Top Pagination starts here
+
+		- This pagination will be visible only in case of desktop
 	=================================== -->
 
 
 	<!-- ============== Client side pagination starts here ============== -->
-	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server != 'true'">
+	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server != 'true' && mobile == false">
 		<nav>
 			<ul class="pagination">
 				<li ng-class="{'disabled': curPage == 0}">
@@ -25,10 +27,11 @@
 			</ul>
 		</nav>
 	</div>
+
 	<!-- ============== Client side pagination ends here ============== -->
 
 	<!-- ============== Server side pagination starts here ============== -->
-	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server == 'true'">
+	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server == 'true' && mobile == false">
 		<nav>
 			<ul class="pagination">
 				<li ng-class="{'disabled': currentPage == 0}">
@@ -58,22 +61,75 @@
 	=================================== -->
 
 	<div class="action-header">
-		<div class="btn-group grid-switcher" role="group" ng-if="switchView">
+		<!-- ===================================================== 
+			Toogle to allow user to switch between grid and list view
+			- Visible in case of desktop only
+		===================================================== -->
+		<div class="btn-group grid-switcher" role="group" ng-if="switchView && mobile == false">
 			<button type="button" class="btn btn-default" ng-class="{'selected' : view=='grid'}" ng-click="changeView('grid')">Grid</button>
 			<button type="button" class="btn btn-default" ng-class="{'selected' : view=='list'}" ng-click="changeView('list')">List</button>
 		</div>
 
-		<span ng-show="view == 'list'">
+		<!-- ===================================================== 
+			Pagination container to allow user to jump to a particular page
+			- Visible in case of mobile only
+		===================================================== -->
+		<label ng-if="mobile==true" class="selectpage-dropdown">Please select a page: 
+
+			<!-- This dropdown will be visible in case of client interaction only -->
+			<select ng-if="(pagePos=='top' || pagePos=='both') && server != 'true'" ng-change="updatePage(curPage-1)" ng-model="curPage">
+				<option ng-repeat="(i, page) in pages">{{i+1}}</option>
+			</select>
+
+			<!-- This dropdown will be visible in case of server interaction only -->
+			<select ng-if="(pagePos=='top' || pagePos=='both') && server == 'true'" ng-change="makeParams(curPage-1, null, 'page')" ng-model="curPage">
+				<option ng-repeat="(i, page) in pageArray">{{i+1}}</option>
+			</select>
+		</label>
+		<!-- Pagination dropdown ends here -->
+
+		<!-- ===================================================== 
+			Allow user to select to sort data
+			- visible in case of mobile view only
+		===================================================== -->
+
+		<label ng-if="mobile==true" class="selectpage-dropdown">Please select to sort: 
+			<select ng-if="(pagePos=='top' || pagePos=='both')" ng-model="selectedHeader" ng-options="header.label for header in grid.headerData" ng-change="sortMe(selectedHeader)"></select>
+		</label>
+		<!-- Sorting dropdown ends here -->
+
+
+		<!-- ===================================================== 
+			Allow user to select how much data should be visible per row
+			- visible in case of desktop + list view only
+		===================================================== -->
+		<span ng-show="view == 'list' && mobile == false">
 			<label class="row-page">Row per column: <input type="text" ng-value="columnCount" ng-model="columnCount" /></label>
 		</span>
+		<!-- Row per page ends here -->
+		
+		<!-- ===================================================== 
+			Search container searching through Grid starts here
+		===================================================== -->
 
+		<!-- Server side search box with Go button
+			- Interaction requires click on Go button -->
 		<span class="search-container server" ng-if="server == 'true'">
 			<input type="text" placeholder="Filter..." class="search-box" ng-model="searchKey" />
 			<button type="button" class="btn btn-default btn-search" ng-click="search(searchKey)">Go</button>
 		</span>
+
+
+		<!-- Client side search box with Go button
+			- Interaction requires change of search box -->
 		<span class="search-container client" ng-if="server != 'true'">
 			<input type="text" ng-change="search(searchKey)" placeholder="Filter..." class="search-box" ng-model="searchKey" />
 		</span>
+
+		<!-- ===================================================== 
+			Search container searching through Grid ends here
+		===================================================== -->
+
 	</div>
 
 	<!-- =================================
@@ -132,11 +188,12 @@
 
 	<!-- =================================
 		Bottom Pagination starts here
+		- This pagination will be visible only in case of desktop
 	=================================== -->
 
 	
 	<!-- ============== Client side pagination starts here ============== -->
-	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server != 'true'">
+	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server != 'true' && mobile == false"">
 		<label class="items-page">Items per page: <input type="text" ng-value="userPaging" ng-change="itemsPerPage(userPaging)" ng-model="userPaging" /></label>
 		<nav>
 			<ul class="pagination">
@@ -159,7 +216,7 @@
 	<!-- ============== Client side pagination ends here ============== -->
 
 	<!-- ============== Server side pagination starts here ============== -->
-	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server == 'true'">
+	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server == 'true' && mobile == false"">
 		<nav>
 			<ul class="pagination">
 				<li ng-class="{'disabled': currentPage == 0}">
@@ -185,7 +242,3 @@
 	=================================== -->
 
 </div>
-
-
-
-
