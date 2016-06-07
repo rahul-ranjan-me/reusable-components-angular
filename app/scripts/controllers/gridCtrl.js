@@ -9,12 +9,30 @@ define([
 	    	this.$scope = $scope;
 	    	this.$http = $http;
 
+			/* *************************************
+				Client side implementation starts here
+			************************************* */
+
+			this.createClientSideGrid();	
+
+			/* *************************************
+				Client side implementation ends here
+			************************************* */
 
 
-/* *************************************
-	Client side implementation starts here
-************************************* */
+			/* *************************************
+				Server side implementation starts here
+			************************************* */
+			this.createServerSideGrid();		
 
+			/* *************************************
+				Server side implementation ends here
+			************************************* */
+
+    	
+	    }
+
+	    GridCtrl.prototype.createClientSideGrid = function(){
 	    	this.$scope.gridData = {
 	    		headerData : {
 	    			name: {
@@ -84,21 +102,11 @@ define([
 	    	this.$scope.onClientRowSelect = function(row){
 	    		this.$scope.selectedClientRow = row;
 	    	}.bind(this);
-
-/* *************************************
-	Client side implementation ends here
-************************************* */
+	    };
 
 
-
-
-
-/* *************************************
-	Server side implementation starts here
-************************************* */
-			this.$scope.flag = false;
-
-			this.$scope.params = {
+	    GridCtrl.prototype.createServerSideGrid = function(){
+	    	this.$scope.params = {
 				page : 0,
 				sortKey : 'age',
 				sortDirection: 'asc',
@@ -144,15 +152,7 @@ define([
 	    	this.$scope.callServer = function(params){
 	    		this.callServer(params);
 	    	}.bind(this);
-
-
-
-/* *************************************
-	Server side implementation ends here
-************************************* */
-
-	    	
-	    }
+	    };
 
 	    GridCtrl.prototype.callServer = function(params) {
 	    	var context = this;
@@ -167,10 +167,7 @@ define([
     			context.$scope.serverGridData.totalRecords = data.records;
     			context.$scope.serverGridData.pageSize = data.pageSize;
     			context.$scope.serverGridData.currentPage = data.currentPage;
-    			this.$scope.flag = Math.random();
-    			if (context.$scope.$root.$$phase != '$apply' && context.$scope.$root.$$phase != '$digest') {
-					context.$scope.$apply();
-				}
+    			context.$scope.$broadcast('griddata', {grid: context.$scope.serverGridData});
     		}.bind(this), function errorCallback(response) {
 				alert('some error occured');
 			});

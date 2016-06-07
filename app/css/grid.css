@@ -118,17 +118,18 @@
 			***************** */
 
 
-.grid-switcher button.selected{
+.labGrid .grid-switcher button.selected{
 	background-color:#337ab7;
 	color: #fff;
 	outline: none;
 }
 
-.items-page{
+.labGrid .items-page{
 	margin-top: 20px;
 }
 
-.items-page input{
+.labGrid .items-page input,
+.labGrid .row-page input{
 	width: 50px;
     border: 1px solid #eee;
     padding: 2px 5px;

@@ -30,61 +30,10 @@ define(
 		    			$scope.view = attrs.view;
 		    			$scope.switchView = attrs.switchview;
 		    			$scope.userPaging = pagesize;
-		    			
+		    			$scope.columnCount = attrs.columncount;
+
 		    			$scope.server = attrs.server;
 		    			$scope.pageArray = [];
-
-renderFromServer();
-
-function createServerPage(totalRecords, pagesize){
-	var indices;
-
-	if(totalRecords%pagesize === 0){
-		indices = totalRecords/pagesize;
-	}else{
-		indices = (totalRecords/pagesize)+1;
-	}
-
-	for(var i=0; i<indices; i++){
-		$scope.pageArray.push(i);
-	}
-}
-
-function renderFromServer(){
-	if($scope.server){
-		$scope.$watch('grid', function handleGridChange(newValue, oldValue){
-			$timeout(function() {
-				gridItems = newValue.grid;
-				doSortonLoad();
-				createServerPage(newValue.totalRecords, newValue.pageSize);
-				$scope.currentPage = newValue.currentPage;
-				$scope.curPage = 0;
-			}, 0);
-		});
-	}
-}
-
-
-$scope.makeParams = function(data, ev, event){
-	if(ev){ev.preventDefault();}
-
-	if(event === 'page'){
-		$scope.params.page = data;
-	}else if(event === 'prev'){
-		$scope.params.page = data-1;
-	}else if(event === 'next'){
-		$scope.params.page = data+1;
-	}else if(event === 'search'){
-		$scope.params.search = data;
-	}else if(event === 'sort'){
-		$scope.params.sortKey = data.sortKey;
-		$scope.params.sortDirection = data.direction;
-	}
-
-	$scope.callserver($scope.params);
-}
-
-
 
 
 		    		/* ****************************************************************
@@ -206,6 +155,75 @@ $scope.makeParams = function(data, ev, event){
 						$scope.pages = pages;
 						$scope.pageToShow = pages[0];
 					}
+
+
+					/* ****************
+		    			Server side interaction methods starts here
+									**************** */
+
+
+					var sortingObj = {};
+
+					if($scope.server){renderFromServer();}
+
+					function createServerPage(totalRecords, pagesize){
+						var indices;
+
+						if(totalRecords%pagesize === 0){
+							indices = totalRecords/pagesize;
+						}else{
+							indices = (totalRecords/pagesize)+1;
+						}
+
+						for(var i=0; i<indices; i++){
+							$scope.pageArray.push(i);
+						}
+					}
+
+					function renderFromServer(){
+						sortingObj.sortKey = $scope.params.sortKey;
+						sortingObj.direction = $scope.params.sortDirection;
+						$scope.currentPage = $scope.grid.currentPage;
+						if($scope.server){
+							$scope.$on('griddata', function (event, args) {
+								gridItems = args.grid.grid;
+								$scope.currentPage = args.grid.currentPage;
+								doSortonLoad();
+								createServerPage($scope.grid.totalRecords, $scope.grid.pageSize);
+								$scope.curPage = 0;
+							});
+						}
+					}
+
+
+					$scope.makeParams = function(data, ev, event){
+						if(ev){ev.preventDefault();}
+
+						if(event === 'page'){
+							$scope.params.page = data;
+						}else if(event === 'prev'){
+							$scope.params.page = data-1;
+						}else if(event === 'next'){
+							$scope.params.page = data+1;
+						}else if(event === 'search'){
+							$scope.params.search = data;
+						}else if(event === 'sort'){
+							if(sortingObj.sortKey !== data.sortKey){
+								delete headers[sortingObj.sortKey].sorted;
+								delete headers[sortingObj.sortKey].direction;
+								sortingObj.sortKey = data.sortKey;
+								sortingObj.direction = data.sortDirection;
+							}
+							$scope.params.sortKey = data.sortKey;
+							$scope.params.sortDirection = data.direction;
+						}
+
+						$scope.callserver($scope.params);
+					}
+
+					/* ****************
+		    			Server side interaction methods ends here
+									**************** */
 
 		    		/* ****************
 		    			Generic sorting function

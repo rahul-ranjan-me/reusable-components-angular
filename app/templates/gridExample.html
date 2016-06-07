@@ -7,7 +7,6 @@
 		<h5>Selected Row :</h5> <pre>{{selectedServerRow}}</pre>
 		<h6>Search Query: </h6> <pre>{{params}}</pre>
 
-		<div ng-if="flag">
 			<grid-directive 
 				class = "myExampleGrid"
 				grid = "serverGridData"
@@ -18,11 +17,11 @@
 				view = "grid"
 				server = "true"
 				params = "params"
+				columncount = 3
 				switchview = true>
 				
 			</grid-directive>
-		</div>
-
+		
 
 
 
@@ -45,6 +44,7 @@
 			pagesize="100"
 			pagepos="both"
 			view="grid"
+			columncount = 2
 			switchview=true>
 			
 		</grid-directive>

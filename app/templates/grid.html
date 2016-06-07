@@ -4,6 +4,8 @@
 		Top Pagination starts here
 	=================================== -->
 
+
+	<!-- ============== Client side pagination starts here ============== -->
 	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server != 'true'">
 		<nav>
 			<ul class="pagination">
@@ -23,8 +25,9 @@
 			</ul>
 		</nav>
 	</div>
+	<!-- ============== Client side pagination ends here ============== -->
 
-
+	<!-- ============== Server side pagination starts here ============== -->
 	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server == 'true'">
 		<nav>
 			<ul class="pagination">
@@ -33,7 +36,6 @@
 						<span aria-hidden="true">&laquo;</span>
 					</a>
 				</li>
-
 				<li ng-repeat="(i, page) in pageArray" ng-class="{'active': currentPage == i}"><a href="#" ng-click="makeParams(i, $event, 'page')">{{i+1}}</a></li>
 
 				<li ng-class="{'disabled': currentPage == pageArray.length}">
@@ -44,6 +46,8 @@
 			</ul>
 		</nav>
 	</div>
+	<!-- ============== Client side pagination ends here ============== -->
+
 
 	<!-- =================================
 		Top Pagination ends here
@@ -58,6 +62,11 @@
 			<button type="button" class="btn btn-default" ng-class="{'selected' : view=='grid'}" ng-click="changeView('grid')">Grid</button>
 			<button type="button" class="btn btn-default" ng-class="{'selected' : view=='list'}" ng-click="changeView('list')">List</button>
 		</div>
+
+		<span ng-show="view == 'list'">
+			<label class="row-page">Row per column: <input type="text" ng-value="columnCount" ng-model="columnCount" /></label>
+		</span>
+
 		<span class="search-container server" ng-if="server == 'true'">
 			<input type="text" placeholder="Filter..." class="search-box" ng-model="searchKey" />
 			<button type="button" class="btn btn-default btn-search" ng-click="search(searchKey)">Go</button>
@@ -106,7 +115,7 @@
 	=================================== --> 
 
 	<div class="list-view" ng-if="view=='list'">
-		<ul class="list-container">
+		<ul class="list-container" style="column-count:{{columnCount}}">
 			<li class="list" 
 				ng-repeat="row in pageToShow"
 				ng-click="rowselect({row: row})">
@@ -125,8 +134,10 @@
 		Bottom Pagination starts here
 	=================================== -->
 
+	
+	<!-- ============== Client side pagination starts here ============== -->
 	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server != 'true'">
-		<label class="items-page">Items per page: <input type="text" ng-value="userPaging" ng-blur="itemsPerPage(userPaging)" ng-model="userPaging" /></label>
+		<label class="items-page">Items per page: <input type="text" ng-value="userPaging" ng-change="itemsPerPage(userPaging)" ng-model="userPaging" /></label>
 		<nav>
 			<ul class="pagination">
 				<li ng-class="{'disabled': curPage == 0}">
@@ -145,6 +156,29 @@
 			</ul>
 		</nav>
 	</div>
+	<!-- ============== Client side pagination ends here ============== -->
+
+	<!-- ============== Server side pagination starts here ============== -->
+	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server == 'true'">
+		<nav>
+			<ul class="pagination">
+				<li ng-class="{'disabled': currentPage == 0}">
+					<a href="#" aria-label="Previous" ng-click="makeParams(currentPage, $event, 'prev')">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<li ng-repeat="(i, page) in pageArray" ng-class="{'active': currentPage == i}"><a href="#" ng-click="makeParams(i, $event, 'page')">{{i+1}}</a></li>
+
+				<li ng-class="{'disabled': currentPage == pageArray.length}">
+					<a href="#" aria-label="Next" ng-click="makeParams(currentPage, $event, 'next')">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+	<!-- ============== Client side pagination ends here ============== -->
+
 
 	<!-- =================================
 		Bottom pagination ends here
