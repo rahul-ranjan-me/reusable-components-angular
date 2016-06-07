@@ -5,18 +5,23 @@
 
 		<h4>Grid example : Server side</h4>
 		<h5>Selected Row :</h5> <pre>{{selectedServerRow}}</pre>
-		<grid-directive 
-			class="myExampleGrid"
-			grid="serverGridData"
-			rowselect="onServerRowSelect(row)"
-			pagesize="100"
-			pagepos="both"
-			view="grid"
-			server="true"
-			switchview=true>
-			
-		</grid-directive>
+		<h6>Search Query: </h6> <pre>{{params}}</pre>
 
+		<div ng-if="flag">
+			<grid-directive 
+				class = "myExampleGrid"
+				grid = "serverGridData"
+				rowselect = "onServerRowSelect(row)"
+				callserver = "callServer(params)"
+				pagesize = "100"
+				pagepos = "both"
+				view = "grid"
+				server = "true"
+				params = "params"
+				switchview = true>
+				
+			</grid-directive>
+		</div>
 
 
 

@@ -47,14 +47,6 @@
     padding: 5px;
 }
 
-.labGrid .action-header .search-box{
-	padding: 6px 6px;
-    border: 1px solid #ddd;
-    float: right;
-    font-size: 12px;
-    width: 23%;
-}
-
 /* *****************
 	Pagination CSS starts here 
 			***************** */
@@ -142,4 +134,31 @@
     padding: 2px 5px;
     font-weight: normal;
     font-size: 12px;
+}
+
+.labGrid .search-container{
+	float: right;
+}
+
+.labGrid .action-header .search-box{
+	padding: 6px 6px;
+    border: 1px solid #ddd;
+    font-size: 12px;
+    width: 100%;
+}
+
+.labGrid .search-container.server .search-box{
+	width: 80%;
+}
+
+.labGrid .btn-search{
+	padding: 6px 12px;
+    margin-left: -7px;
+    border-left: none;
+    box-shadow: none;
+    border-radius: 0;
+    border-color: #337ab7;
+    font-size: 12px;
+    background: #337ab7;
+    color: #fff;
 }

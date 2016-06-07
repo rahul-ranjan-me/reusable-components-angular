@@ -8,13 +8,16 @@ define(
 		grid
 	){
     
-	    return function($filter, $http, $timeout){
+	    return function($filter, $rootScope, $timeout){
 	    	return {
 		    	template : grid,
 		    	scope : {
 		    		grid : '=',
+		    		params : '=',
+		    		callserver : '&',
 		    		rowselect : '&'
 		    	},
+		    	require: '?ngModel',
 		    	link : function($scope, elem, attrs){
 		    		
 		    		var headers = $scope.grid.headerData,
@@ -31,20 +34,7 @@ define(
 		    			$scope.server = attrs.server;
 		    			$scope.pageArray = [];
 
-
-
-if($scope.server){
-	$scope.$watch('grid', function handleGridChange(newValue, oldValue){
-		$timeout(function() {
-			console.log($scope.grid.headerData);
-			gridItems = newValue.grid;
-			doSortonLoad();
-			createServerPage(newValue.totalRecords, newValue.pageSize);
-			$scope.currentPage = newValue.currentPage;
-		}, 0);
-	});
-}
-
+renderFromServer();
 
 function createServerPage(totalRecords, pagesize){
 	var indices;
@@ -60,6 +50,39 @@ function createServerPage(totalRecords, pagesize){
 	}
 }
 
+function renderFromServer(){
+	if($scope.server){
+		$scope.$watch('grid', function handleGridChange(newValue, oldValue){
+			$timeout(function() {
+				gridItems = newValue.grid;
+				doSortonLoad();
+				createServerPage(newValue.totalRecords, newValue.pageSize);
+				$scope.currentPage = newValue.currentPage;
+				$scope.curPage = 0;
+			}, 0);
+		});
+	}
+}
+
+
+$scope.makeParams = function(data, ev, event){
+	if(ev){ev.preventDefault();}
+
+	if(event === 'page'){
+		$scope.params.page = data;
+	}else if(event === 'prev'){
+		$scope.params.page = data-1;
+	}else if(event === 'next'){
+		$scope.params.page = data+1;
+	}else if(event === 'search'){
+		$scope.params.search = data;
+	}else if(event === 'sort'){
+		$scope.params.sortKey = data.sortKey;
+		$scope.params.sortDirection = data.direction;
+	}
+
+	$scope.callserver($scope.params);
+}
 
 
 
@@ -93,9 +116,13 @@ function createServerPage(totalRecords, pagesize){
 		    					item.direction = 'asc';
 		    				}
 
-		    				gridItems = (sorting(gridItems, item.id, item.direction));
-		    				$scope.curPage = 0;
-		    				createPage();
+		    				if($scope.server){
+		    					$scope.makeParams({sortKey: item.id, direction: item.direction}, null, 'sort');
+		    				}else{
+			    				gridItems = (sorting(gridItems, item.id, item.direction));
+			    				$scope.curPage = 0;
+			    				createPage();
+			    			}
 
 		    				for(var i in headers){
 			    				if (item.id !== headers[i].id){
@@ -107,9 +134,13 @@ function createServerPage(totalRecords, pagesize){
 
 		    		}
 
-		    		$scope.search = function(){
-		    			gridItems = $filter('filter')(freezedItems, $scope.searchKey);
-		    			createPage();
+		    		$scope.search = function(search){
+		    			if($scope.server){
+		    				$scope.makeParams(search, null, 'search');
+		    			}else{
+		    				gridItems = $filter('filter')(freezedItems, search);
+		    				createPage();
+			    		}
 		    		}
 
 		    		

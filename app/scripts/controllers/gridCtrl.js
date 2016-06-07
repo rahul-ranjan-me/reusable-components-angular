@@ -1,5 +1,9 @@
-define([], 
-	function() {
+define([
+		'properties'
+	], 
+	function(
+		Properties
+	) {
 		
 	    function GridCtrl($scope, httpCalls, $http){
 	    	this.$scope = $scope;
@@ -92,7 +96,15 @@ define([],
 /* *************************************
 	Server side implementation starts here
 ************************************* */
-			
+			this.$scope.flag = false;
+
+			this.$scope.params = {
+				page : 0,
+				sortKey : 'age',
+				sortDirection: 'asc',
+				search : null
+			};
+
 			this.$scope.serverGridData = {
 				headerData : {
 	    			name: {
@@ -123,12 +135,15 @@ define([],
 	    		grid : []
 			};
 
-			this.callServer('/json/gridFakeData.js', {});
+			this.callServer(this.$scope.params);
 
 			this.$scope.onServerRowSelect = function(row){
 	    		this.$scope.selectedServerRow = row;
 	    	}.bind(this);
 
+	    	this.$scope.callServer = function(params){
+	    		this.callServer(params);
+	    	}.bind(this);
 
 
 
@@ -139,10 +154,10 @@ define([],
 	    	
 	    }
 
-	    GridCtrl.prototype.callServer = function(url, params) {
+	    GridCtrl.prototype.callServer = function(params) {
 	    	var context = this;
 	    	this.$http({
-    			url : '/json/gridFakeData.js',
+    			url : Properties.gridAction,
     			method: 'GET',
     			params: params ? params : {}
     		})
@@ -152,6 +167,10 @@ define([],
     			context.$scope.serverGridData.totalRecords = data.records;
     			context.$scope.serverGridData.pageSize = data.pageSize;
     			context.$scope.serverGridData.currentPage = data.currentPage;
+    			this.$scope.flag = Math.random();
+    			if (context.$scope.$root.$$phase != '$apply' && context.$scope.$root.$$phase != '$digest') {
+					context.$scope.$apply();
+				}
     		}.bind(this), function errorCallback(response) {
 				alert('some error occured');
 			});

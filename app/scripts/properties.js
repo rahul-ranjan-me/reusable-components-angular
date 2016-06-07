@@ -4,7 +4,7 @@ define([],
 	    return {
 	    	'appId' : 'myCustomApplication',
 	    	'home' : '/json/home.json',
-	    	'homeworks' : '/json/homework.json',
+	    	'gridAction' : '/json/gridFakeData.json',
 	    	'homeworkDetail' : '/json/homeworkDetail.json'
 	    }
 
