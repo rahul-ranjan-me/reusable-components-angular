@@ -5,44 +5,284 @@
 
 		<hr />
 
-		<h4>Grid example : Server side</h4>
-		<h5>Selected Row :</h5> <pre>{{selectedServerRow}}</pre>
-		<h6>Search Query: </h6> <pre>{{params}}</pre>
-
-		<grid-directive 
-			class = "myExampleGrid"
-			grid = "serverGridData"
-			rowselect = "onServerRowSelect(row)"
-			callserver = "callServer(params)"
-			pagesize = "1000"
-			pagepos = "both"
-			view = "grid"
-			server = "true"
-			params = "params"
-			columncount = 3
-			switchview = true>
+		<div class="grid-wrapper">
+			<h4>Grid example : Client side {<a href="#" ng-click="showImplementation($event, 'client')">Click here to see the implementation guide</a>}</h4>
+			<h5>Selected Row :</h5> <pre>{{selectedClientRow}}</pre>
+			<grid-directive 
+				class="myExampleGrid"
+				grid="gridData"
+				rowselect="onClientRowSelect(row)"
+				pagesize="100"
+				pagepos="both"
+				view="grid"
+				columncount = 2
+				switchview=true>
+				
+			</grid-directive>
 			
-		</grid-directive>
+			<div ng-if="showWhat == 'client'">
+				<div class="impmentation-guide">
+					<div class="wrapper-content">
+						<div>
+							<a href="#" class="close-me" ng-click="closeMe($event)">x</a>
+						</div>
+						<h2>Client Side</h2>
 
+						<div class="implementation-content">
+<pre>
+< grid-directive 
+	class="myExampleGrid"
+	grid="gridData"
+	rowselect="onClientRowSelect(row)"
+	pagesize="100"
+	pagepos="both"
+	view="grid"
+	columncount = 2
+	switchview=false>
+	
+</ grid-directive>
+</pre>
+
+<h3>Attribute usage</h3>
+<p><strong>class</strong> : The css class to control the styling</p>
+<p><strong>grid</strong> : The data which grid will take to construct the grid. Following is the sample format for the same</p>
+<pre>
+this.$scope.gridData = {
+	headerData : {
+		name: {
+			label:'Name',
+			id: 'name',
+			width:'25%'
+		},
+		age: {
+			label:'Age',
+			id: 'age',
+			sort: true,
+			sorted: 'asc',
+			width:'25%'
+		},
+		birthday: {
+			label:'Birthday',
+			id: 'birthday',
+			sort: true,
+			width:'25%'
+		},
+		salary: {
+			label: 'Salary',
+			id: 'salary',
+			sort: true,
+			width:'25%'
+		}
+	},
+	grid : [
+		{
+			name: 'Moroni',
+			age: 50,
+			birthday : 'Oct 28, 1970',
+			salary : '60,000'
+		},
+		{
+			name: 'Tiancum',
+			age: 43,
+			birthday : 'Sep 28, 1970',
+			salary : '40,000'
+		},
+		{
+			name: 'Jacob',
+			age: 30,
+			birthday : 'Oct 28, 1965',
+			salary : '45,000'
+		},
+		{
+			name: 'Nephi',
+			age: 32,
+			birthday : 'Oct 28, 1968',
+			salary : '60,000'
+		}
+	]
+};
+</pre>
+<p><strong>rowselect</strong> : Here you can provide a callback method name on which you will get the selected row object</p>
+<hr />
+<p><strong>pagesize</strong> : The total number of records you want to show per page</p>
+<hr />
+<p><strong>pagepos</strong> : This is used to declare the position of pagination. Acceptable values are:</p>
+<strong>'top'</strong> : to show on top
+<strong>'bottom'</strong> : to show on bottom
+<strong>'both'</strong> : to show on top and bottom
+<hr />
+<p><strong>view</strong> : This tells how you want to do the initial display of a grid. Acceptable values are:</p>
+<strong>"grid" : To show in tabular view</strong>
+<strong>"list" : To show in list view</strong>
+<hr />
+<p><strong>columncount</strong> : This is used for list view. You can declare how many items you want to display in each row</p>
+<hr />
+<p><strong>switchview</strong>: To enable or disable the switcher to toggle the view of the data in list or grid view. Acceptable values are :</p>
+<strong>false</strong>: if you want to hide it
+<strong>true</strong>: if you want to display it
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<hr />
 
-		<h4>Grid example : Client side</h4>
-		<h5>Selected Row :</h5> <pre>{{selectedClientRow}}</pre>
-		<grid-directive 
-			class="myExampleGrid"
-			grid="gridData"
-			rowselect="onClientRowSelect(row)"
-			pagesize="100"
-			pagepos="both"
-			view="grid"
-			columncount = 2
-			switchview=false>
-			
-		</grid-directive>
 
 
 
 
-		
+
+		<div class="grid-wrapper">
+			<h4>Grid example : Server side {<a href="#" ng-click="showImplementation($event, 'server')">Click here to see the implementation guide</a>}</h4>
+			<h5>Selected Row :</h5> <pre>{{selectedServerRow}}</pre>
+			<h6>Search Query: </h6> <pre>{{params}}</pre>
+
+			<grid-directive 
+				class = "myExampleGrid"
+				grid = "serverGridData"
+				rowselect = "onServerRowSelect(row)"
+				callserver = "callServer(params)"
+				pagesize = "1000"
+				pagepos = "both"
+				view = "grid"
+				server = "true"
+				params = "params"
+				columncount = 3
+				switchview = true>
+				
+			</grid-directive>
+
+
+
+
+			<div ng-if="showWhat == 'server'">
+				<div class="impmentation-guide">
+					<div class="wrapper-content">
+						<div>
+							<a href="#" class="close-me" ng-click="closeMe($event)">x</a>
+						</div>
+						<h2>Server Side</h2>
+
+						<div class="implementation-content">
+<pre>
+< grid-directive 
+	class = "myExampleGrid"
+	grid = "serverGridData"
+	rowselect = "onServerRowSelect(row)"
+	callserver = "callServer(params)"
+	pagesize = "1000"
+	pagepos = "both"
+	view = "grid"
+	server = "true"
+	params = "params"
+	columncount = 3
+	switchview = true>
+	
+</ grid-directive>
+</pre>
+
+<h3>Attribute usage</h3>
+<p><strong>class</strong> : The css class to control the styling</p>
+<p><strong>grid</strong> : The data which grid will take to construct the grid. Following is the sample format for the same</p>
+<p>Following will be the format from REST call</p>
+<pre>
+{
+  "gridData" : [],   // the rows object
+  "currentPage" : 1, // which is the current page
+  "records" : 200, // Total number of records
+  "pageSize": 100 // records showing per page
+}
+</pre>
+<pre>
+this.$scope.gridData = {
+	headerData : {
+		name: {
+			label:'Name',
+			id: 'name',
+			width:'25%'
+		},
+		age: {
+			label:'Age',
+			id: 'age',
+			sort: true,
+			sorted: 'asc',
+			width:'25%'
+		},
+		birthday: {
+			label:'Birthday',
+			id: 'birthday',
+			sort: true,
+			width:'25%'
+		},
+		salary: {
+			label: 'Salary',
+			id: 'salary',
+			sort: true,
+			width:'25%'
+		}
+	},
+	grid : [],  // should come from REST response and populate here
+	totalRecords : 200 // should come from REST response and populate here
+	pageSize : 100 // should come from REST response and populate here
+	currentPage : 1 // should come from REST response and populate here
+};
+</pre>
+<hr />
+<h2>Major requirement</h2>
+<p>You need to broadcast the server response in above object using $broadcast like below:</p>
+<pre>
+context.$scope.$broadcast('griddata', {grid: context.$scope.serverGridData});
+</pre>
+
+<hr />
+<p><strong>rowselect</strong> : Here you can provide a callback method name on which you will get the selected row object</p>
+<hr />
+
+<p><strong>callserver</strong> : Here you can provide a callback method to interact with server for various client interaction like, search, sorting, pagination etc. The updated params will be provided as an argument to this method</p>
+<hr />
+
+<p><strong>pagesize</strong> : The total number of records you want to show per page</p>
+<hr />
+
+<p><strong>pagepos</strong> : This is used to declare the position of pagination. Acceptable values are:</p>
+<strong>'top'</strong> : to show on top
+<strong>'bottom'</strong> : to show on bottom
+<strong>'both'</strong> : to show on top and bottom
+<hr />
+
+<p><strong>view</strong> : This tells how you want to do the initial display of a grid. Acceptable values are:</p>
+<strong>"grid" : To show in tabular view</strong>
+<strong>"list" : To show in list view</strong>
+<hr />
+
+<p><strong>server</strong>: To let grid know that user interaction will be server side</p>
+<strong>"false"</strong>: if the grid is not server
+<strong>"true"</strong>: if the grid is server
+<hr />
+
+<p><strong>params</strong> : This will be updated each time when user interact with features like pagination, sorting, search etc. Acceptable format is:</p>
+<pre>
+this.$scope.params = {
+	page : 0,  // page number to send to server
+	sortKey : 'age', // Key for sorting
+	sortDirection: 'asc', // direction of sorting, Acceptable values are 'asc' or 'desc'
+	search : null // search string
+};
+
+</pre>
+<hr />
+
+<p><strong>columncount</strong> : This is used for list view. You can declare how many items you want to display in each row</p>
+<hr />
+
+<p><strong>switchview</strong>: To enable or disable the switcher to toggle the view of the data in list or grid view. Acceptable values are :</p>
+<strong>false</strong>: if you want to hide it
+<strong>true</strong>: if you want to display it
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
 	</div>
 </div>

@@ -30,6 +30,21 @@ define([
 			************************************* */
 
     	
+
+			$scope.showImplementation = function(ev, what){
+				ev.preventDefault();
+				if(what === 'client'){
+					$scope.showWhat = 'client';
+				}else{
+					$scope.showWhat = 'server';
+				}
+			};
+
+			$scope.closeMe = function(ev){
+				ev.preventDefault();
+				delete $scope.showWhat;
+			};
+
 	    }
 
 	    GridCtrl.prototype.createClientSideGrid = function(){
@@ -106,7 +121,7 @@ define([
 
 	    GridCtrl.prototype.createServerSideGrid = function(){
 	    	this.$scope.params = {
-				page : 1,
+				page : 0,
 				sortKey : 'age',
 				sortDirection: 'asc',
 				search : null
