@@ -106,7 +106,7 @@ define([
 
 	    GridCtrl.prototype.createServerSideGrid = function(){
 	    	this.$scope.params = {
-				page : 0,
+				page : 1,
 				sortKey : 'age',
 				sortDirection: 'asc',
 				search : null
