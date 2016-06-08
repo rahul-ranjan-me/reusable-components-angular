@@ -65,7 +65,7 @@
 			Toogle to allow user to switch between grid and list view
 			- Visible in case of desktop only
 		===================================================== -->
-		<div class="btn-group grid-switcher" role="group" ng-if="switchView && mobile == false">
+		<div class="btn-group grid-switcher" role="group" ng-if="switchView == 'true' && mobile == false">
 			<button type="button" class="btn btn-default" ng-class="{'selected' : view=='grid'}" ng-click="changeView('grid')">Grid</button>
 			<button type="button" class="btn btn-default" ng-class="{'selected' : view=='list'}" ng-click="changeView('list')">List</button>
 		</div>

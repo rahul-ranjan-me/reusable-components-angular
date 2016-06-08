@@ -158,6 +158,7 @@ define(
 						var pages = [],
 							page = [],
 							item = 0;
+							console.log(pagesize);
 						for(var i = 0; i < gridItems.length; i++){
 							
 							item = item+1;
@@ -203,12 +204,14 @@ define(
 						sortingObj.sortKey = $scope.params.sortKey;
 						sortingObj.direction = $scope.params.sortDirection;
 						$scope.currentPage = $scope.grid.currentPage;
+
 						if($scope.server){
 							$scope.$on('griddata', function (event, args) {
+								pagesize = args.grid.pageSize;
 								gridItems = args.grid.grid;
 								$scope.currentPage = args.grid.currentPage;
 								doSortonLoad();
-								createServerPage($scope.grid.totalRecords, $scope.grid.pageSize);
+								createServerPage($scope.grid.totalRecords, args.grid.pageSize);
 								$scope.curPage = 0;
 							});
 						}

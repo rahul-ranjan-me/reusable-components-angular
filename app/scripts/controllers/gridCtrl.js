@@ -98,7 +98,6 @@ define([
 	    			}	
 	    		);
 	    	}
-
 	    	this.$scope.onClientRowSelect = function(row){
 	    		this.$scope.selectedClientRow = row;
 	    	}.bind(this);
