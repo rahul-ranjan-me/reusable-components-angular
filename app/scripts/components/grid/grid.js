@@ -158,7 +158,6 @@ define(
 						var pages = [],
 							page = [],
 							item = 0;
-							console.log(pagesize);
 						for(var i = 0; i < gridItems.length; i++){
 							
 							item = item+1;
