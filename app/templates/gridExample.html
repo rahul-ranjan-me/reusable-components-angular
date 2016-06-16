@@ -1,6 +1,8 @@
 <div>
 	<header-directive headertext="UI Reusable Components"></header-directive>
 	<div class="content">
+		<p><a href="#/">Go to home</a></p>
+		
 		<h3>Grid</h3>
 
 		<hr />
@@ -13,6 +15,7 @@
 				grid="gridData"
 				rowselect="onClientRowSelect(row)"
 				pagesize="100"
+				eventkey="gridData1"
 				pagepos="both"
 				view="grid"
 				columncount = 2
@@ -33,13 +36,13 @@
 < grid-directive 
 	class="myExampleGrid"
 	grid="gridData"
+	eventkey="gridData1"
 	rowselect="onClientRowSelect(row)"
 	pagesize="100"
 	pagepos="both"
 	view="grid"
 	columncount = 2
-	switchview=false>
-	
+	switchview=true>
 </ grid-directive>
 </pre>
 
@@ -49,59 +52,81 @@
 <pre>
 this.$scope.gridData = {
 	headerData : {
+		serial : {
+			label: 'No.',
+			id : 'number',
+			sort : true,
+			width : '250px' // Available options for width is % and px. % is applicable only when your grid 					<br/>width is not more than 100% otherwise please use px.
+		},
 		name: {
 			label:'Name',
 			id: 'name',
-			width:'25%'
+			width: '250px'
 		},
 		age: {
 			label:'Age',
 			id: 'age',
 			sort: true,
 			sorted: 'asc',
-			width:'25%'
+			width: '250px'
 		},
 		birthday: {
 			label:'Birthday',
 			id: 'birthday',
 			sort: true,
-			width:'25%'
+			width: '250px'
 		},
 		salary: {
 			label: 'Salary',
 			id: 'salary',
 			sort: true,
-			width:'25%'
+			width: '250px'
+		},
+		sortNumber : {
+			label: 'Sort Number',
+			id : 'sortNumber',
+			sort : true,
+			width : '250px'
 		}
 	},
 	grid : [
 		{
+			serial: '1',
 			name: 'Moroni',
 			age: 50,
 			birthday : 'Oct 28, 1970',
-			salary : '60,000'
+			salary : '60,000',
+			sortNumber : 300525
 		},
 		{
+			serial: '2',
 			name: 'Tiancum',
 			age: 43,
 			birthday : 'Sep 28, 1970',
-			salary : '40,000'
+			salary : '40,000',
+			sortNumber : 55245
 		},
 		{
+			serial: '3',
 			name: 'Jacob',
 			age: 30,
 			birthday : 'Oct 28, 1965',
-			salary : '45,000'
+			salary : '45,000',
+			sortNumber : 9986367
 		},
 		{
+			serial: '4',
 			name: 'Nephi',
 			age: 32,
 			birthday : 'Oct 28, 1968',
-			salary : '60,000'
+			salary : '60,000',
+			sortNumber : 225412
 		}
 	]
 };
 </pre>
+<p><strong>eventkey</strong> : This is the event name on which you need to broadcast griddata if fetching of griddata involves http call</p>
+<hr />
 <p><strong>rowselect</strong> : Here you can provide a callback method name on which you will get the selected row object</p>
 <hr />
 <p><strong>pagesize</strong> : The total number of records you want to show per page</p>
@@ -145,6 +170,7 @@ this.$scope.gridData = {
 				pagesize = "1000"
 				pagepos = "both"
 				view = "grid"
+				eventkey="griddata"
 				server = "true"
 				params = "params"
 				columncount = 3

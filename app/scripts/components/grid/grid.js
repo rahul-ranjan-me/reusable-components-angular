@@ -23,7 +23,8 @@ define(
 		    		var headers = $scope.grid.headerData,
 		    			gridItems = $scope.grid.grid,
 		    			freezedItems = angular.copy(gridItems),
-		    			allPages = [];
+		    			allPages = []
+		    			calcWidth = true;
 		    			pagesize = parseInt(attrs.pagesize),
 		    			$scope.curPage = 0;
 		    			$scope.pagePos = attrs.pagepos;
@@ -31,9 +32,10 @@ define(
 		    			$scope.switchView = attrs.switchview;
 		    			$scope.userPaging = pagesize;
 		    			$scope.columnCount = attrs.columncount;
-
+		    			
 		    			$scope.server = attrs.server;
 		    			$scope.pageArray = [];
+		    			$scope.gridWidth = 0;
 
 		    		/* ****************************************************************
 		    			Condition to handle mobile view
@@ -54,8 +56,7 @@ define(
 		    			This for loop will be called during the first rendering 
 		    			of this directive to sort on load
 					***************************************************************** */
-		    		doSortonLoad();
-
+		    		
 		    		$scope.changeView = function(view){
 		    			$scope.view = view;
 		    		}
@@ -142,12 +143,21 @@ define(
 										**************** */
 
 					function doSortonLoad(){
+						var widthUnit = 'px';
 						for(var i in headers){
 			    			if(headers[i].sorted){
 			    				gridItems = (sorting(gridItems, headers[i].id, headers[i].sorted));
 			    				headers[i].direction = headers[i].sorted;
 			    			}
+			    			if(calcWidth){
+			    				widthUnit = headers[i].width.indexOf('%') !== -1 ? '%' : 'px';
+								$scope.gridWidth += parseInt(headers[i].width.split(widthUnit)[0]);
+			    			}
 			    		}
+			    		if(calcWidth){
+			    			$scope.widthUnit = widthUnit;
+			    		}
+			    		calcWidth = false;
 			    		createPage();
 					}
 
@@ -183,7 +193,17 @@ define(
 
 					var sortingObj = {};
 
-					if($scope.server){renderFromServer();}
+					if($scope.server){
+						renderFromServer();
+					}else{
+						$scope.$on(attrs.eventkey, function (event, args) {
+							gridItems = args.grid;
+							freezedItems = angular.copy(gridItems);
+							$scope.curPage = 0;
+							doSortonLoad();
+						});
+						doSortonLoad();
+					}
 
 					function createServerPage(totalRecords, pagesize){
 						var indices;
@@ -205,7 +225,7 @@ define(
 						$scope.currentPage = $scope.grid.currentPage;
 
 						if($scope.server){
-							$scope.$on('griddata', function (event, args) {
+							$scope.$on(attrs.eventkey, function (event, args) {
 								pagesize = args.grid.pageSize;
 								gridItems = args.grid.grid;
 								$scope.currentPage = args.grid.currentPage;

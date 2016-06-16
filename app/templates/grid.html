@@ -139,29 +139,32 @@
 	<!-- =================================
 		Grid view ends here
 	=================================== -->
+	<div class="grid-scroll">
+		<div class="grid-view" ng-if="view=='grid' || view==null" style="width: {{gridWidth}}{{widthUnit}}">
+			<div class="header-container">
+				<ul class="grid" style="width: {{gridWidth}}{{widthUnit}}">
+					<li class="header row">
+						<span class="cell" ng-repeat="(i, header) in grid.headerData" ng-click="sortMe(header)" ng-class="{true:'sortable'}[header.sort]" style="width: {{header.width}}">
+							{{header.label}} <span ng-if="header.direction.length > 0"><i ng-class="{asc:'glyphicon glyphicon-arrow-up', desc:'glyphicon glyphicon-arrow-down'}[header.direction]"></i></span>
+						</span>
+					</li>
+				</ul>
+			</div>
 
-	<div class="grid-view" ng-if="view=='grid' || view==null">
-		<div class="header-container">
-			<ul class="grid">
-				<li class="header row">
-					<span class="cell" ng-repeat="(i, header) in grid.headerData" ng-click="sortMe(header)" ng-class="{true:'sortable'}[header.sort]" style="width: {{header.width}}">
-						{{header.label}} <span ng-if="header.direction.length > 0"><i ng-class="{asc:'glyphicon glyphicon-arrow-up', desc:'glyphicon glyphicon-arrow-down'}[header.direction]"></i></span>
-					</span>
-				</li>
-			</ul>
-		</div>
-
-		<div class="grid-container">
-			<ul class="grid">
-				<li class="row body" 
-					ng-repeat="row in pageToShow" 
-					ng-click="rowselect({row: row})">
-					<span class="cell" ng-repeat="(i, item) in row" style="width: {{grid.headerData[i].width}}">{{item}}</span>
-				</li>
-			</ul>
+			<div class="grid-container">
+				<ul class="grid" style="width: {{gridWidth}}{{widthUnit}}">
+					<li class="row body" 
+						ng-repeat="row in pageToShow" 
+						ng-click="rowselect({row: row})">
+						<span class="cell" ng-repeat="(i, item) in row" style="width: {{grid.headerData[i].width}}">
+							<span ng-if="grid.headerData[i].format" ng-bind-html='grid.headerData[i].format(item, i, row)'></span>
+							<span ng-if="!grid.headerData[i].format">{{item}}</span>
+						</span>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
-
 	<!-- =================================
 		Grid view ends here
 	=================================== -->
@@ -193,7 +196,7 @@
 
 	
 	<!-- ============== Client side pagination starts here ============== -->
-	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server != 'true' && mobile == false"">
+	<div class="pagination-container" ng-if="(pagePos=='bottom' || pagePos=='both') && server != 'true' && mobile == false"">
 		<label class="items-page">Items per page: <input type="text" ng-value="userPaging" ng-change="itemsPerPage(userPaging)" ng-model="userPaging" /></label>
 		<nav>
 			<ul class="pagination">
@@ -216,7 +219,7 @@
 	<!-- ============== Client side pagination ends here ============== -->
 
 	<!-- ============== Server side pagination starts here ============== -->
-	<div class="pagination-container" ng-if="(pagePos=='top' || pagePos=='both') && server == 'true' && mobile == false"">
+	<div class="pagination-container" ng-if="(pagePos=='bottom' || pagePos=='both') && server == 'true' && mobile == false"">
 		<nav>
 			<ul class="pagination">
 				<li ng-class="{'disabled': currentPage == 0}">

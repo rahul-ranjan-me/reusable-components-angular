@@ -5,9 +5,12 @@ define([
 		Properties
 	) {
 		
-	    function GridCtrl($scope, httpCalls, $http){
+		var self;
+	    function GridCtrl($scope, httpCalls, $http, $sce){
+	    	self = this;
 	    	this.$scope = $scope;
 	    	this.$http = $http;
+	    	this.$sce = $sce;
 
 			/* *************************************
 				Client side implementation starts here
@@ -45,60 +48,131 @@ define([
 				delete $scope.showWhat;
 			};
 
-	    }
+		}
 
-	    GridCtrl.prototype.createClientSideGrid = function(){
+	    function formatMe(arg){
+	    	var date = new Date(arg);
+
+	    	function formatTime(input){
+	    		var inputTime = parseInt(input);
+	    		if(inputTime < 10){
+	    			return '0' + inputTime;
+	    		}else{
+	    			return inputTime;
+	    		}
+	    	}
+
+	    	function formatMonth(input){
+	    		switch(input) {
+				    case 0:
+				        return 'Jan';
+				    case 1:
+				        return 'Feb';
+				    case 2:
+				        return 'Mar';
+				    case 3:
+				        return 'Apr';
+					case 4:
+				        return 'May';
+				    case 5:
+				        return 'Jun';
+				    case 6:
+				        return 'July';
+				    case 7:
+				        return 'Aug';
+				    case 8:
+				        return 'Sep';
+				    case 9:
+				        return 'Oct';
+				    case 10:
+				        return 'Nov';
+				    case 11:
+				        return 'Dec';
+				}
+	    	}
+
+	    	return self.$sce.trustAsHtml('<strong>'+date.getDate() + '-' +
+	    		formatMonth(date.getMonth()) + '-' + 
+	    		date.getFullYear() + ' ' +
+	    		formatTime(date.getHours()) + ':' + 
+	    		formatTime(date.getMinutes()) + ':' +
+	    		formatTime(date.getSeconds()) + '</strong>');
+		}
+
+		GridCtrl.prototype.createClientSideGrid = function(){
 	    	this.$scope.gridData = {
 	    		headerData : {
+	    			serial : {
+	    				label: 'No.',
+	    				id : 'number',
+	    				sort : true,
+	    				sorted : 'desc',
+	    				format: formatMe,
+	    				width : '250px'
+	    			},
 	    			name: {
 	    				label:'Name',
 	    				id: 'name',
-	    				width:'25%'
+	    				sort : true,
+	    				width: '250px'
 	    			},
 	    			age: {
 	    				label:'Age',
 	    				id: 'age',
 	    				sort: true,
-	    				sorted: 'asc',
-	    				width:'25%'
+	    				width: '250px'
 	    			},
 	    			birthday: {
 	    				label:'Birthday',
 	    				id: 'birthday',
 	    				sort: true,
-	    				width:'25%'
+	    				width: '250px'
 	    			},
 	    			salary: {
 	    				label: 'Salary',
 	    				id: 'salary',
 	    				sort: true,
-	    				width:'25%'
+	    				width: '250px'
+	    			},
+	    			sortNumber : {
+	    				label: 'Sort Number',
+	    				id : 'sortNumber',
+	    				sort : true,
+	    				width : '250px'
 	    			}
 	    		},
 	    		grid : [
 	    			{
+	    				serial: 1465796010006,
 	    				name: 'Moroni',
 	    				age: 50,
 	    				birthday : 'Oct 28, 1970',
-	    				salary : '60,000'
+	    				salary : '60,000',
+	    				sortNumber : 300525
 	    			},
 	    			{
+	    				serial: 1465796010006,
 	    				name: 'Tiancum',
 	    				age: 43,
 	    				birthday : 'Sep 28, 1970',
-	    				salary : '40,000'
+	    				salary : '40,000',
+	    				sortNumber : 55245
 	    			},
 	    			{
+	    				serial: 1465796010006,
 	    				name: 'Jacob',
 	    				age: 30,
 	    				birthday : 'Oct 28, 1965',
-	    				salary : '45,000'
+	    				salary : '45,000',
+	    				sortNumber : 9986367
 	    			},
 	    			{
+	    				serial: 1465796010006,
 	    				name: 'Nephi',
 	    				age: 32,
 	    				birthday : 'Oct 28, 1968',
-	    				salary : '60,000'
+	    				salary : '60,000',
+	    				sortNumber : 225412
 	    			}
 	    		]
 	    	};
@@ -106,10 +180,12 @@ define([
 	    	for(var i=0; i<1000; i++){
 	    		this.$scope.gridData.grid.push(
 	    			{
+	    				serial : new Date().valueOf(),
 	    				name : Math.random().toString().split('.')[1],
 	    				age: Math.random().toString().split('.')[1],
 	    				birthday: Math.random().toString().split('.')[1],
-	    				salary: Math.random().toString().split('.')[1]
+	    				salary: Math.random().toString().split('.')[1],
+	    				sortNumber: Math.random().toString().split('.')[1]
 	    			}	
 	    		);
 	    	}

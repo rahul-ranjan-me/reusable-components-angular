@@ -18,11 +18,14 @@
 	display: table-cell;
 	border-bottom:1px solid #ccc;
 	padding: 5px 10px;
+	float: left;
 }
 
 .labGrid li.header{
-	font-weight: bold;
-	font-size: 14px;
+	font-weight: 700;
+    font-size: 14px;
+    background: #0c5d91;
+    color: #fff;
 }
 
 .labGrid li.row span.sortable{
@@ -47,6 +50,16 @@
     padding: 5px;
 }
 
+.labGrid .grid-scroll{
+    width: 100%;
+    overflow-x: auto
+}
+
+.labGrid ul.grid,
+.labGrid ul.grid li{
+    width: auto;
+}
+
 /* *****************
 	Pagination CSS starts here 
 			***************** */
@@ -61,6 +74,10 @@
 
 .labGrid ::-webkit-scrollbar {
     width: 12px;
+}
+
+.labGrid ::-webkit-scrollbar{
+	height: 12px;
 }
  
 .labGrid ::-webkit-scrollbar-track {
@@ -92,11 +109,13 @@
 	padding: 10px;
 	display: inline-block;
 	border: 1px solid #eee;
-	width: 99%;
+	width: 98%;
 	cursor: pointer;
 	-webkit-box-shadow: 0px 6px 30px -6px rgba(99,99,99,0.48);
 	-moz-box-shadow: 0px 6px 30px -6px rgba(99,99,99,0.48);
 	box-shadow: 0px 6px 30px -6px rgba(99,99,99,0.48);
+	-webkit-transition: width 2s; /* Safari */
+    transition: width 2s;
 }
 
 .labGrid .list-view li.list:hover{
@@ -119,7 +138,7 @@
 
 
 .labGrid .grid-switcher button.selected{
-	background-color:#337ab7;
+	background-color:#0c5d91;
 	color: #fff;
 	outline: none;
 }
@@ -180,4 +199,14 @@
     padding: 5px;
     border: 1px solid #eee;
     font-weight: normal;
+}
+
+.labGrid .grid-container{
+	overflow-x: hidden;
+	overflow-y:auto;
+}
+
+.labGrid .grid-view,
+.labgrid ul.grid{
+	min-width: 100%;
 }
